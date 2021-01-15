@@ -1,6 +1,7 @@
 const router = require("express").Router();
 module.exports = router;
 
+// Route: GET /api
 router.get("/", (req, res) => {
   res.send("The api route is working!");
 });
