@@ -9,7 +9,7 @@ module.exports = router;
 router.get("/", async (req, res, next) => {
   try {
     const creditors = await Creditor.findAll();
-    res.send(creditors);
+    res.json(creditors);
   } catch (error) {
     next(error);
   }
@@ -28,7 +28,7 @@ router.get("/analysis", async (req, res, next) => {
         },
       },
     });
-    res.send(creditors);
+    res.json(creditors);
   } catch (error) {
     next(error);
   }
@@ -39,7 +39,7 @@ router.get("/:id", async (req, res, next) => {
   try {
     const creditor = await Creditor.findByPk(req.params.id);
     if (creditor) {
-      res.send(creditor);
+      res.json(creditor);
     } else {
       const error = new Error("Creditor Not Found");
       error.status = 404;
@@ -54,7 +54,7 @@ router.get("/:id", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
   try {
     const newCreditor = await Creditor.create(req.body);
-    res.send(newCreditor);
+    res.json(newCreditor);
   } catch (error) {
     next(error);
   }
@@ -66,7 +66,7 @@ router.put("/:id", async (req, res, next) => {
     const creditor = await Creditor.findByPk(req.params.id);
     if (creditor) {
       const updatedCreditor = await creditor.update(req.body);
-      res.send(updatedCreditor);
+      res.json(updatedCreditor);
     } else {
       const error = new Error("Creditor Not Found");
       error.status = 404;
@@ -86,7 +86,7 @@ router.delete("/:id", async (req, res, next) => {
       },
     });
     if (creditor) {
-      res.sendStatus(200);
+      res.jsonStatus(200);
     } else {
       const error = new Error("Creditor Not Found");
       error.status = 404;
