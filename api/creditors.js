@@ -116,7 +116,7 @@ router.delete("/:id", async (req, res, next) => {
       },
     });
     if (creditor) {
-      res.jsonStatus(200);
+      res.sendStatus(200);
     } else {
       const error = new Error("Creditor Not Found");
       error.status = 404;
