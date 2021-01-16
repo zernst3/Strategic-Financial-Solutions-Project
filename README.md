@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This api application was created using node, express, postgreSQL and sequelize. Contained within it are routes that allow the user to get all creditors, get a single creditor by id, update and delete creditors and run an analysis as required.
+This api application was created using node, express, postgreSQL and sequelize. Contained within it are routes that allow the user to get all creditors, get a single creditor by name, update and delete creditors and run an analysis as required.
 
 ## How to run locally
 

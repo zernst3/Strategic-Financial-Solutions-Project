@@ -6,16 +6,38 @@ const Op = Sequelize.Op;
 module.exports = router;
 
 // Route: GET /api/creditors
+// Get all creditor data with total balance and average min pay percentage
 router.get("/", async (req, res, next) => {
   try {
     const creditors = await Creditor.findAll();
-    res.json(creditors);
+
+    let totalBalance = 0;
+    let totalMinPaymentPercentage = 0;
+
+    creditors.forEach((creditor) => {
+      totalBalance = totalBalance + parseFloat(creditor.balance);
+      totalMinPaymentPercentage =
+        totalMinPaymentPercentage + parseFloat(creditor.minPaymentPercentage);
+    });
+
+    let averageMinPaymentPercentage =
+      totalMinPaymentPercentage / creditors.length;
+
+    averageMinPaymentPercentage = averageMinPaymentPercentage.toFixed(2);
+
+    res.json({
+      creditors: creditors,
+      totalBalance,
+      averageMinPaymentPercentage,
+    });
   } catch (error) {
     next(error);
   }
 });
 
 // Route: GET /api/creditors/analysis
+/* Credit analysis route that returns creditors with a balance of over $2,000
+and a creditor min pay percentage that doesn't exceed 29.99% */
 router.get("/analysis", async (req, res, next) => {
   try {
     const creditors = await Creditor.findAll({
@@ -34,10 +56,16 @@ router.get("/analysis", async (req, res, next) => {
   }
 });
 
-// Route: GET /api/creditors/:id
-router.get("/:id", async (req, res, next) => {
+// Route: GET /api/creditors/:name
+// Get creditor data by creditor name
+router.get("/:name", async (req, res, next) => {
   try {
-    const creditor = await Creditor.findByPk(req.params.id);
+    const creditor = await Creditor.findAll({
+      where: {
+        creditorName: req.params.name,
+      },
+    });
+
     if (creditor) {
       res.json(creditor);
     } else {
@@ -51,6 +79,7 @@ router.get("/:id", async (req, res, next) => {
 });
 
 // Route: POST /api/creditors
+// Add a new creditor entry
 router.post("/", async (req, res, next) => {
   try {
     const newCreditor = await Creditor.create(req.body);
@@ -61,6 +90,7 @@ router.post("/", async (req, res, next) => {
 });
 
 // Route: PUT /api/creditors/:id
+// Update an existing creditor entry (partial or full update)
 router.put("/:id", async (req, res, next) => {
   try {
     const creditor = await Creditor.findByPk(req.params.id);
