@@ -19,10 +19,12 @@ module.exports = db.define("Creditor", {
   },
   minPaymentPercentage: {
     type: Sequelize.DECIMAL,
+    unique: false,
     allowNull: false,
   },
   balance: {
     type: Sequelize.DECIMAL,
+    unique: false,
     allowNull: false,
   },
 });

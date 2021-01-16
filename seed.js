@@ -77,7 +77,11 @@ const seed = async () => {
   try {
     await db.sync({ force: true });
     for (let i = 0; i < creditors.length; i++) {
-      await Creditor.create(creditors[i]);
+      try {
+        await Creditor.create(creditors[i]);
+      } catch (error) {
+        console.log(error);
+      }
     }
     db.close();
   } catch (error) {
@@ -88,7 +92,7 @@ const seed = async () => {
 const runSeed = async () => {
   try {
     await seed();
-    console.log("seeding success");
+    console.log("Seeding success");
   } catch (error) {
     console.log(error);
   }
