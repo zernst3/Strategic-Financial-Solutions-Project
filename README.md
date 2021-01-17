@@ -28,3 +28,7 @@ All api routes can be tested locally by using Postman. All data retrieved will b
 ## Challenges
 
 The most challenging part of this application, as with many others, is successfully connecting the postgreSQL database to this server. There is a lot of boilerplate code necessary for this to happen, so ensuring that it was all present and called upon properly in the proper files was important. With some research and through reading the documentation, this challenge was overcome.
+
+## Youtube Video
+
+https://www.youtube.com/watch?v=04QgWu5oPaI&feature=youtu.be&ab_channel=ZacharyErnst
